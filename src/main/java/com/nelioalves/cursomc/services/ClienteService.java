@@ -58,7 +58,6 @@ public class ClienteService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Nao eh possivel excluir porque ha pedidos relacionados");
 		}
-		repo.deleteById(id);
 	}
 
 	public List<Cliente> findAll() {
