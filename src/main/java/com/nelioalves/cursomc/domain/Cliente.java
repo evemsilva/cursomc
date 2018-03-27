@@ -32,12 +32,12 @@ public class Cliente implements Serializable {
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
-	@Column(name="telefone")
+	@Column(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCodigo();
+		this.tipo = tipo == null ? null : tipo.getCodigo();
 	}
 
 	public Integer getId() {
