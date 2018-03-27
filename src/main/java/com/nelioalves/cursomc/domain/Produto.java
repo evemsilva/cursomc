@@ -90,7 +90,7 @@ public class Produto implements Serializable {
 
 	@JsonIgnore
 	public List<Pedido> getPedidos() {
-		return this.itens.stream().map(item -> item.getPedido()).collect(Collectors.toList());
+		return this.itens.stream().map(ItemPedido::getPedido).collect(Collectors.toList());
 	}
 
 	@Override
