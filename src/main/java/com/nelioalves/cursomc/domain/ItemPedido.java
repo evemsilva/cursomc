@@ -30,6 +30,10 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	public Double getSubTotal(){
+		return (preco - desconto) * quantidade;
+	}
 
 	public ItemPedidoPK getId() {
 		return id;
@@ -71,7 +75,7 @@ public class ItemPedido implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
