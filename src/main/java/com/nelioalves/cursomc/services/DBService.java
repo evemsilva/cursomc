@@ -21,6 +21,7 @@ import com.nelioalves.cursomc.domain.PagamentoComCartao;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.enums.EstadoPagamento;
+import com.nelioalves.cursomc.domain.enums.Perfil;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.CidadeRepository;
@@ -135,8 +136,16 @@ public class DBService {
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 
-		clienteRepository.save(cli1);
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		Cliente cli2 = new Cliente(null, "Nathalia Christine Robles da Silva", "nathaliachristine@hotmail.com", "28936476009", TipoCliente.PESSOA_FISICA, pe.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		
+		Endereco e3 = new Endereco(null, "Avenida Martim Francisco", "119", null, "Jardim Aurora", "09675345", cli2, cid2);
+		
+		cli2.getTelefones().addAll(Arrays.asList("44018967", "978563426"));
+		cli2.getEnderecos().add(e3);
+		
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
