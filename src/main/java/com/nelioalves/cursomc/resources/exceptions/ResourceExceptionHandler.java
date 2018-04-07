@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.nelioalves.cursomc.services.exceptions.AutorizationException;
 import com.nelioalves.cursomc.services.exceptions.DataIntegrityException;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -31,6 +32,12 @@ public class ResourceExceptionHandler {
 		ValidationError validationError = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validacao de campo", System.currentTimeMillis());
 		e.getBindingResult().getFieldErrors().forEach(error -> validationError.addErrors(new FieldMessage(error.getField(), error.getDefaultMessage())));
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
+	}
+	
+	@ExceptionHandler(AutorizationException.class)
+	public ResponseEntity<StandardError> autorization(AutorizationException e, HttpServletRequest request) {
+		StandardError standardError = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(standardError);
 	}
 
 }
