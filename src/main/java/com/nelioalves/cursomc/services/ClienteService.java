@@ -139,7 +139,7 @@ public class ClienteService {
 		jpgImage = imageService.cropSquare(jpgImage);
 	    	jpgImage = imageService.resize(jpgImage, imageSize);
 
-		String fileName = prefix + String.format("%05d", user.getId()) + ".jpg";
+		String fileName = prefix + user.getId() + ".jpg";
 		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg"), "image");
 	}
 
