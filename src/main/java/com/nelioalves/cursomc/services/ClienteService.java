@@ -1,9 +1,11 @@
 package com.nelioalves.cursomc.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,6 +46,12 @@ public class ClienteService {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
 
 	public Cliente find(Integer id) {
 		
@@ -124,15 +132,9 @@ public class ClienteService {
 			throw new AutorizationException("Acesso negado");
 		}
 		
-		URI imageUrl = s3Service.uploadFile(multipartFile);
-		
-		Cliente cliente = repo.findById(user.getId()).orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName()));
-		
-		cliente.setImageUrl(imageUrl.toString());
-		
-		repo.save(cliente);
-		return imageUrl;
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = prefix + String.format("%05d", user.getId()) + ".jpg";
+		return s3Service.uploadFile(fileName, imageService.getInputStream(jpgImage, "jpg"), "image");
 	}
 
 	private void updateData(Cliente newObj, Cliente obj) {
