@@ -23,7 +23,7 @@ public class JWTAutenticationFilter extends UsernamePasswordAuthenticationFilter
 
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
-	
+
 	public JWTAutenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
@@ -44,24 +44,25 @@ public class JWTAutenticationFilter extends UsernamePasswordAuthenticationFilter
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 		String username = ((UserSS) authResult.getPrincipal()).getUsername();
-        String token = jwtUtil.generateToken(username);
-        response.addHeader("Authorization", "Bearer " + token);
+        	String token = jwtUtil.generateToken(username);
+        	response.addHeader("Authorization", "Bearer " + token);
+	    	response.addHeader("access-control-expose-headers", "Authorization");
 	}
-	
+
 	/**
-	 * 
-	 * Classe para compatibilidade com Spring Boot 2.x.x 
+	 *
+	 * Classe para compatibilidade com Spring Boot 2.x.x
 	 * Retorna status code 401
 	 */
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
-		 
+
         @Override
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
             response.setStatus(401);
-            response.setContentType("application/json"); 
+            response.setContentType("application/json");
             response.getWriter().append(json());
         }
-        
+
         private String json() {
             long date = new Date().getTime();
             return "{\"timestamp\": " + date + ", "
