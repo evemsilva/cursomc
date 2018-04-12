@@ -1,4 +1,4 @@
-package com.nelioalves.cursomc;
+package com.nelioalves.cursomc.filters;
 
 import java.io.IOException;
 import javax.servlet.Filter;
