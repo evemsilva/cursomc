@@ -2,42 +2,62 @@ package com.nelioalves.cursomc.resources.exceptions;
 
 import java.io.Serializable;
 
-public class StandardError implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class StandardError
+		implements Serializable {
 
-	private Integer status;
-	private String msg;
-	private Long timeStamp;
+    private static final long serialVersionUID = 1L;
 
-	public StandardError(Integer status, String msg, Long timeStamp) {
-		super();
-		this.status = status;
-		this.msg = msg;
-		this.timeStamp = timeStamp;
-	}
+    private Long    timestamp;
+    private Integer status;
+    private String  error;
+    private String  message;
+    private String  path;
 
-	public Integer getStatus() {
-		return status;
-	}
+    public StandardError(Long timestamp, Integer status, String error, String message, String path) {
+	this.timestamp = timestamp;
+	this.status = status;
+	this.error = error;
+	this.message = message;
+	this.path = path;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public Long getTimestamp() {
+	return timestamp;
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public void setTimestamp(Long timestamp) {
+	this.timestamp = timestamp;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    public Integer getStatus() {
+	return status;
+    }
 
-	public Long getTimeStamp() {
-		return timeStamp;
-	}
+    public void setStatus(Integer status) {
+	this.status = status;
+    }
 
-	public void setTimeStamp(Long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
+    public String getError() {
+	return error;
+    }
 
+    public void setError(String error) {
+	this.error = error;
+    }
+
+    public String getMessage() {
+	return message;
+    }
+
+    public void setMessage(String message) {
+	this.message = message;
+    }
+
+    public String getPath() {
+	return path;
+    }
+
+    public void setPath(String path) {
+	this.path = path;
+    }
 }
